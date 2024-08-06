@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:weather_app/presentation/splash/screen/splash.dart';
+import 'package:weather_app/presentation/weather/screen/weather_screen.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
@@ -12,10 +12,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: Splash(),
+      home: WeatherScreen(),
     );
   }
 }
