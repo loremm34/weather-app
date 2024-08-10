@@ -8,9 +8,12 @@ class BasicAppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20.0, left: 10.0),
-      child: Container(
-        width: 116,
+      padding: const EdgeInsets.only(
+        top: 20.0,
+        left: 5.0,
+      ),
+      child: SizedBox(
+        width: 115,
         height: 42,
         child: ElevatedButton(
           onPressed: () {},

@@ -8,11 +8,15 @@ class WeatherScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          WeatherMain(),
-          WeatherDetails(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            WeatherMain(),
+            WeatherDetails(
+              title: 'Today',
+            ),
+          ],
+        ),
       ),
     );
   }

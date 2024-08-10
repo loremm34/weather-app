@@ -4,18 +4,18 @@ import 'package:weather_app/common/configs/app_color.dart';
 class WeatherCard extends StatelessWidget {
   const WeatherCard(
       {super.key,
-      required this.weather_attr,
-      required this.weather_attr_value,
-      required this.weather_attr_icon});
+      required this.weatherAttr,
+      required this.weatherAttrValue,
+      required this.weatherAttrIcon});
 
-  final String weather_attr;
-  final String weather_attr_value;
-  final IconData weather_attr_icon;
+  final String weatherAttr;
+  final String weatherAttrValue;
+  final IconData weatherAttrIcon;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 182,
+      width: 172,
       height: 65,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -33,7 +33,7 @@ class WeatherCard extends StatelessWidget {
               width: 28,
               height: 28,
               child: Icon(
-                weather_attr_icon,
+                weatherAttrIcon,
                 size: 16,
               ),
             ),
@@ -44,7 +44,7 @@ class WeatherCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  weather_attr,
+                  weatherAttr,
                   style: const TextStyle(
                     color: Colors.black,
                   ),
@@ -53,7 +53,7 @@ class WeatherCard extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  weather_attr_value,
+                  weatherAttrValue,
                   style: const TextStyle(
                     color: Colors.black,
                   ),

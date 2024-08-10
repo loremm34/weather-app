@@ -113,7 +113,7 @@ class WeatherMain extends StatelessWidget {
                     "January 18, 16:14",
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
-                  const Spacer(),
+                  Spacer(),
                   Column(
                     children: [
                       Text(
