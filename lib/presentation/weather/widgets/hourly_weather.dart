@@ -34,7 +34,6 @@ class HourlyWeather extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
                 const Text(
                   'Hourly forecast',
                   style: TextStyle(color: Colors.black),
@@ -66,7 +65,7 @@ class HourlyWeather extends StatelessWidget {
                         Text(
                           '10°',
                           style: TextStyle(fontSize: 20),
-                        )
+                        ),
                       ],
                     ),
                   );
