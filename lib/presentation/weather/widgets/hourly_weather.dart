@@ -10,7 +10,7 @@ class HourlyWeather extends StatelessWidget {
       padding: const EdgeInsets.only(top: 0.0),
       child: Container(
         width: 380,
-        height: 150,
+        height: 180,
         decoration: BoxDecoration(
           color: AppColor.containerBackgroundColor,
           borderRadius: BorderRadius.circular(12),
@@ -41,23 +41,34 @@ class HourlyWeather extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 5),
             SizedBox(
-              height: 80,
+              height: 120,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 7,
+                itemCount: 9,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Text('10am'),
-                      SizedBox(height: 10),
-                      Icon(Icons.cloud, size: 10),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text('10°')
-                    ],
+                  return const Padding(
+                    padding: const EdgeInsets.only(bottom: 7.0, left: 10.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          '10am',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Icon(Icons.cloud, size: 30),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          '10°',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
                   );
                 },
               ),
