@@ -188,7 +188,7 @@ class DayWeather extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: gradientColors,
           ),
-          barWidth: 3,
+          barWidth: 2,
           isStrokeCapRound: true,
           dotData: const FlDotData(
             show: true,

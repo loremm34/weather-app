@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/common/widgets/basic_app_button.dart';
 import 'package:weather_app/presentation/weather/widgets/day_weather.dart';
 import 'package:weather_app/presentation/weather/widgets/hourly_weather.dart';
+import 'package:weather_app/presentation/weather/widgets/rain_chance.dart';
 import 'package:weather_app/presentation/weather/widgets/weather_card.dart';
 
 class WeatherDetails extends ConsumerWidget {
@@ -61,6 +62,8 @@ class WeatherDetails extends ConsumerWidget {
             const HourlyWeather(),
             const SizedBox(height: 16),
             DayWeather(),
+            const SizedBox(height: 16),
+            RainChanceWidget(),
           ],
         ),
       ),
