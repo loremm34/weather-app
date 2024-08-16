@@ -7,26 +7,55 @@ class DayWeather extends StatelessWidget {
 
   List<Color> gradientColors = [
     const Color(0xFF8E44AD),
-    const Color(0xFF9B59B6),
+    const Color.fromARGB(255, 212, 104, 255),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColor.containerBackgroundColor,
-      child: AspectRatio(
-        aspectRatio: 1.70,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            right: 18,
-            left: 12,
-            top: 24,
-            bottom: 12,
+      decoration: BoxDecoration(
+          color: AppColor.containerBackgroundColor,
+          borderRadius: BorderRadius.circular(12)),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  width: 28,
+                  height: 28,
+                  child: const Icon(
+                    Icons.cloudy_snowing,
+                    size: 16,
+                  ),
+                ),
+              ),
+              const Text(
+                'Hourly forecast',
+                style: TextStyle(color: Colors.black),
+              )
+            ],
           ),
-          child: LineChart(
-            mainData(),
+          AspectRatio(
+            aspectRatio: 1.70,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                right: 18,
+                left: 12,
+                // top: 8,
+                bottom: 18,
+              ),
+              child: LineChart(
+                mainData(),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -141,7 +170,7 @@ class DayWeather extends StatelessWidget {
       minX: 0,
       maxX: 6,
       minY: -10,
-      maxY: 10,
+      maxY: 15,
       lineBarsData: [
         LineChartBarData(
           spots: const [
@@ -155,6 +184,8 @@ class DayWeather extends StatelessWidget {
           ],
           isCurved: true,
           gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: gradientColors,
           ),
           barWidth: 3,
