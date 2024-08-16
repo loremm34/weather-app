@@ -4,6 +4,7 @@ import 'package:weather_app/common/widgets/basic_app_button.dart';
 import 'package:weather_app/presentation/weather/widgets/day_weather.dart';
 import 'package:weather_app/presentation/weather/widgets/hourly_weather.dart';
 import 'package:weather_app/presentation/weather/widgets/rain_chance.dart';
+import 'package:weather_app/presentation/weather/widgets/sunrise_sunset.dart';
 import 'package:weather_app/presentation/weather/widgets/weather_card.dart';
 
 class WeatherDetails extends ConsumerWidget {
@@ -64,6 +65,8 @@ class WeatherDetails extends ConsumerWidget {
             DayWeather(),
             const SizedBox(height: 16),
             RainChanceWidget(),
+            const SizedBox(height: 16),
+            const SunriseSunsetWidget(),
           ],
         ),
       ),
