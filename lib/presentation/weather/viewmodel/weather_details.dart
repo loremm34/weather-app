@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/common/widgets/basic_app_button.dart';
+import 'package:weather_app/presentation/weather/screen/ten_days_screen.dart';
+import 'package:weather_app/presentation/weather/screen/weather_screen.dart';
 import 'package:weather_app/presentation/weather/widgets/day_weather.dart';
 import 'package:weather_app/presentation/weather/widgets/hourly_weather.dart';
 import 'package:weather_app/presentation/weather/widgets/rain_chance.dart';
@@ -8,9 +10,34 @@ import 'package:weather_app/presentation/weather/widgets/sunrise_sunset.dart';
 import 'package:weather_app/presentation/weather/widgets/weather_card.dart';
 
 class WeatherDetails extends ConsumerWidget {
-  const WeatherDetails({super.key, required this.title});
+  const WeatherDetails({super.key});
 
-  final String title;
+  void todayWeather(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return WeatherScreen();
+      }),
+    );
+  }
+
+  void tommorowWeather(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return WeatherScreen();
+      }),
+    );
+  }
+
+  void tenDaysWeather(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return TenDaysScreen();
+      }),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,9 +49,21 @@ class WeatherDetails extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                BasicAppButton(title: title),
-                BasicAppButton(title: "Tomorrow"),
-                BasicAppButton(title: "10 days"),
+                BasicAppButton(
+                    title: "Today",
+                    onButtonPressed: () {
+                      todayWeather(context);
+                    }),
+                BasicAppButton(
+                    title: "Tomorrow",
+                    onButtonPressed: () {
+                      tommorowWeather(context);
+                    }),
+                BasicAppButton(
+                    title: "10 days",
+                    onButtonPressed: () {
+                      tenDaysWeather(context);
+                    }),
               ],
             ),
             const SizedBox(height: 16),

@@ -12,9 +12,7 @@ class WeatherScreen extends StatelessWidget {
         child: Column(
           children: [
             WeatherMain(),
-            WeatherDetails(
-              title: 'Today',
-            ),
+            WeatherDetails(),
           ],
         ),
       ),
