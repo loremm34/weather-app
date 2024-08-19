@@ -20,7 +20,10 @@ class BasicAppButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: onButtonPressed,
           child: Center(
-            child: Text(title),
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 13),
+            ),
           ),
         ),
       ),
