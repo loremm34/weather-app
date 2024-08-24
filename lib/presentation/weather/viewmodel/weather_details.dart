@@ -101,7 +101,7 @@ class WeatherDetails extends ConsumerWidget {
             const SizedBox(height: 16),
             const HourlyWeather(),
             const SizedBox(height: 16),
-            DayWeather(),
+            WeeklyWeather(),
             const SizedBox(height: 16),
             RainChanceWidget(),
             const SizedBox(height: 16),

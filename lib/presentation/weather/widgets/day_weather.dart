@@ -2,8 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/common/configs/app_color.dart';
 
-class DayWeather extends StatelessWidget {
-  DayWeather({super.key});
+class WeeklyWeather extends StatelessWidget {
+  WeeklyWeather({super.key});
 
   List<Color> gradientColors = [
     const Color(0xFF8E44AD),

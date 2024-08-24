@@ -12,7 +12,7 @@ class TenDaysScreen extends StatelessWidget {
         children: [
           Container(
             height: 260,
-            color: AppColor.containerBackgroundColor,
+            color: AppColor.topWidgetBackgroundColor,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.3, vertical: 33),

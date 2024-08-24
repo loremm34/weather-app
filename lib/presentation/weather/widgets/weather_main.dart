@@ -71,7 +71,7 @@ class WeatherMain extends StatelessWidget {
                   const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 80), // Добавляем отступ сверху
+                      SizedBox(height: 80),
                       Text(
                         'Feels like -2°',
                         style: TextStyle(
