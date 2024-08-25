@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/resources/resources.dart';
 import 'package:weather_app/services/api_service.dart';
 
@@ -11,7 +12,7 @@ class WeatherMain extends StatefulWidget {
 
 class _WeatherMainState extends State<WeatherMain> {
   late Future<Map<String, dynamic>> weatherData;
-
+  DateTime now = DateTime.now();
   @override
   void initState() {
     weatherData = ApiService().getTodayWeather();
@@ -29,7 +30,13 @@ class _WeatherMainState extends State<WeatherMain> {
           return const Center(child: Text('Smth went wrong'));
         } else if (snapshot.hasData) {
           final weather = snapshot.data!;
+          final weatherArray = weather['weather'];
           final temperature = weather['main']['temp'].round().toString();
+          final description = weatherArray[0]['main'].toString();
+          final cityName = weather['name'].toString();
+          final feelsLike = weather['main']['feels_like'].round();
+          final minTemp = weather['main']['temp_min'].round().toString();
+          final maxTemp = weather['main']['temp_max'].round().toString();
 
           return Stack(
             children: [
@@ -59,9 +66,9 @@ class _WeatherMainState extends State<WeatherMain> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Kharkiv, Ukraine',
-                          style: TextStyle(
+                        Text(
+                          cityName,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 25,
                           ),
@@ -93,13 +100,13 @@ class _WeatherMainState extends State<WeatherMain> {
                             ),
                           ],
                         ),
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 80),
+                            const SizedBox(height: 80),
                             Text(
-                              'Feels like -2°',
-                              style: TextStyle(
+                              'Feels like $feelsLike°',
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                               ),
@@ -119,9 +126,9 @@ class _WeatherMainState extends State<WeatherMain> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                const Text(
-                                  "Cloudy",
-                                  style: TextStyle(color: Colors.white),
+                                Text(
+                                  description,
+                                  style: const TextStyle(color: Colors.white),
                                 )
                               ],
                             ),
@@ -132,24 +139,25 @@ class _WeatherMainState extends State<WeatherMain> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Row(
+                    Row(
                       children: [
                         Text(
-                          "January 18, 16:14",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                          DateFormat('MMMM d, h:mm').format(now),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 18),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Column(
                           children: [
                             Text(
-                              "Day 3°",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+                              "Day $maxTemp°",
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 18),
                             ),
                             Text(
-                              "Night -1°",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+                              "Night $minTemp°",
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 18),
                             ),
                           ],
                         )

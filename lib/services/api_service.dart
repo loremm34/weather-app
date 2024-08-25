@@ -8,7 +8,7 @@ class ApiService {
 
   Future<Map<String, dynamic>> getTodayWeather() async {
     final String url =
-        "https://api.openweathermap.org/data/2.5/weather?appid=$apiKey&q=Minsk&units=metric";
+        "https://api.openweathermap.org/data/2.5/weather?lat=53.89&units=metric&lon=27.56&appid=$apiKey";
 
     final response = await http.get(Uri.parse(url));
 
