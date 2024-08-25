@@ -1,14 +1,14 @@
+import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class ApiService {
-  final _apiKey = dotenv.env['OPENWEATHER_API_KEY'];
-  final String _baseUrl = "https://api.openweathermap.org/data/2.5";
+  final String? apiKey = dotenv.env['OPENWEATHER_API_KEY'];
+  final String baseUrl = "https://api.openweathermap.org/data/2.5";
 
-  Future<Map<String, dynamic>> getTodayWeather(double lon, double lat) async {
+  Future<Map<String, dynamic>> getTodayWeather() async {
     final String url =
-        "$_baseUrl/weather?lat=$lat&lon=$lon&units=metric&appid=$_apiKey";
+        "https://api.openweathermap.org/data/2.5/weather?appid=$apiKey&q=Minsk&units=metric";
 
     final response = await http.get(Uri.parse(url));
 
@@ -18,13 +18,10 @@ class ApiService {
     return {};
   }
 
-  Future<Map<String, dynamic>> getHourlyWeather(double lon, double lat) async {
+  Future<Map<String, dynamic>> getHourlyWeather(double lat, double lon) async {
     final String url =
-        "$_baseUrl/onecall?lat=$lat&lon=$lon&exclude=minutely,daily,alerts&units=metric&appid=$_apiKey";
-
+        "https://api.openweathermap.org/data/2.5/forecast?$lat=33&$lon=55&units=metric&appid=$apiKey";
     final response = await http.get(Uri.parse(url));
-
-    print(response.body);
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
