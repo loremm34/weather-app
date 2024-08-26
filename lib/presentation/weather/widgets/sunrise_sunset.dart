@@ -63,7 +63,7 @@ class SunriseSunsetWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          width: 16,
+          width: 27,
         ),
         Container(
           height: 65,
