@@ -49,7 +49,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return TenDaysScreen();
+        return const TenDaysScreen();
       }),
     );
   }
@@ -87,6 +87,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
               final windSpeed = weather['wind']['speed'].round();
               final sunrise = weather['sys']['sunrise'].toInt();
               final sunset = weather['sys']['sunset'].toInt();
+              final pressure = weather['main']['pressure'].toString();
+              final rainChance = weather['rain']?['1h'] ?? 0.0;
+              final clouds = weather['clouds']['all'].toString();
 
               return Column(
                 children: [
@@ -137,26 +140,27 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               weatherAttrIcon: Icons.wind_power,
                             ),
                             const SizedBox(width: 27),
-                            const WeatherCard(
+                            WeatherCard(
                               weatherAttr: 'Rain chance',
-                              weatherAttrValue: "24%",
+                              weatherAttrValue:
+                                  '${((rainChance / 10) * 100).round().toString()}%',
                               weatherAttrIcon: Icons.water_drop,
                             ),
                           ],
                         ),
                         const SizedBox(height: 16),
-                        const Row(
+                        Row(
                           children: [
                             WeatherCard(
                               weatherAttr: 'Pressure',
-                              weatherAttrValue: '720',
+                              weatherAttrValue: '$pressure hpa',
                               weatherAttrIcon: Icons.panorama_fisheye_rounded,
                             ),
-                            SizedBox(width: 27),
+                            const SizedBox(width: 27),
                             WeatherCard(
-                              weatherAttr: 'UV Index',
-                              weatherAttrValue: '2.3',
-                              weatherAttrIcon: Icons.sunny,
+                              weatherAttr: 'Clouds',
+                              weatherAttrValue: '$clouds%',
+                              weatherAttrIcon: Icons.cloud,
                             ),
                           ],
                         ),

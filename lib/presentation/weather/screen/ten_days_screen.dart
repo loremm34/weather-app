@@ -38,14 +38,14 @@ class TenDaysScreen extends StatelessWidget {
                   ),
                   const Row(
                     children: [
-                      const Text(
+                      Text(
                         '3°',
                         style: TextStyle(
                           fontSize: 57,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 15),
@@ -58,8 +58,8 @@ class TenDaysScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Spacer(),
-                      const Icon(
+                      Spacer(),
+                      Icon(
                         Icons.wb_sunny,
                         size: 80,
                         color: Colors.amber,
