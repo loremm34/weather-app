@@ -58,6 +58,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
     return speed * 3.6.toInt();
   }
 
+  String formatTime(int timestamp) {
+    final DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    return DateFormat('HH:mm').format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +85,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
               final minTemp = weather['main']['temp_min'].round().toString();
               final maxTemp = weather['main']['temp_max'].round().toString();
               final windSpeed = weather['wind']['speed'].round();
+              final sunrise = weather['sys']['sunrise'].toInt();
+              final sunset = weather['sys']['sunset'].toInt();
 
               return Column(
                 children: [
@@ -130,7 +137,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               weatherAttrIcon: Icons.wind_power,
                             ),
                             const SizedBox(width: 27),
-                            WeatherCard(
+                            const WeatherCard(
                               weatherAttr: 'Rain chance',
                               weatherAttrValue: "24%",
                               weatherAttrIcon: Icons.water_drop,
@@ -160,7 +167,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         const SizedBox(height: 16),
                         RainChanceWidget(),
                         const SizedBox(height: 16),
-                        const SunriseSunsetWidget(),
+                        SunriseSunsetWidget(
+                            sunrise: formatTime(sunrise),
+                            sunset: formatTime(sunset)),
                       ],
                     ),
                   ),

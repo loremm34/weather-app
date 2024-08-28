@@ -48,7 +48,7 @@ class HourlyWeather extends StatelessWidget {
                 itemCount: 9,
                 itemBuilder: (context, index) {
                   return const Padding(
-                    padding: const EdgeInsets.only(bottom: 7.0, left: 10.0),
+                    padding: EdgeInsets.only(bottom: 7.0, left: 10.0),
                     child: Column(
                       children: [
                         Text(

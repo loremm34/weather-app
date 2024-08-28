@@ -2,7 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/common/configs/app_color.dart';
 
 class SunriseSunsetWidget extends StatelessWidget {
-  const SunriseSunsetWidget({super.key});
+  const SunriseSunsetWidget(
+      {super.key, required this.sunrise, required this.sunset});
+
+  final String sunrise;
+  final String sunset;
+
+  String getTimeAgo(int timestamp) {
+    final DateTime time = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    final Duration difference = DateTime.now().difference(time);
+
+    if (difference.inHours > 0) {
+      return '${difference.inHours}h ago';
+    } else if (difference.inMinutes > 0) {
+      return '${difference.inMinutes}m ago';
+    } else if (difference.inHours < 0) {
+      return 'in ${difference.inHours * -1}h ';
+    } else {
+      return '${difference.inSeconds}h ago';
+    }
+  }
+
+  int parseTime(String time) {
+    final parts = time.split(':');
+    final hour = int.parse(parts[0]);
+    final minute = int.parse(parts[1]);
+    final now = DateTime.now();
+    final dateTime = DateTime(now.year, now.month, now.day, hour, minute);
+
+    return dateTime.millisecondsSinceEpoch ~/ 1000;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,26 +62,25 @@ class SunriseSunsetWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Sunrise'),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text('4:20AM'),
+                  const Text('Sunrise'),
+                  const SizedBox(height: 8),
+                  Text(sunrise),
                 ],
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                     child: Text(
-                      '4h ago',
-                      style: TextStyle(
+                      getTimeAgo(parseTime(sunrise)),
+                      style: const TextStyle(
                         fontSize: 10,
                       ),
                     ),
@@ -90,28 +118,25 @@ class SunriseSunsetWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Sunrise'),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text('4:20AM'),
+                  const Text('Sunset'),
+                  const SizedBox(height: 8),
+                  Text(sunset),
                 ],
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                     child: Text(
-                      '4h ago',
-                      style: TextStyle(
-                        fontSize: 10,
-                      ),
+                      getTimeAgo(parseTime(sunset)),
+                      style: const TextStyle(fontSize: 10),
                     ),
                   )
                 ],
