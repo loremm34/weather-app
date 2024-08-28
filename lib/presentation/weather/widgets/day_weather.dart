@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/common/configs/app_color.dart';
 
 class WeeklyWeather extends StatelessWidget {
-  WeeklyWeather({super.key});
+  WeeklyWeather({super.key, required this.weeklyWeatherData});
+
+  final List<double> weeklyWeatherData;
 
   List<Color> gradientColors = [
     const Color(0xFF8E44AD),
@@ -36,7 +38,7 @@ class WeeklyWeather extends StatelessWidget {
                 ),
               ),
               const Text(
-                'Hourly forecast',
+                'Day forecast',
                 style: TextStyle(color: Colors.black),
               )
             ],
@@ -47,7 +49,6 @@ class WeeklyWeather extends StatelessWidget {
               padding: const EdgeInsets.only(
                 right: 18,
                 left: 12,
-                // top: 8,
                 bottom: 18,
               ),
               child: LineChart(
@@ -109,19 +110,18 @@ class WeeklyWeather extends StatelessWidget {
     );
     String text;
     switch (value.toInt()) {
-      case -10:
-        text = '-10°';
+      case -40:
+        text = '-40°';
         break;
       case 0:
         text = '0°';
         break;
-      case 10:
-        text = '10°';
+      case 40:
+        text = '40°';
         break;
       default:
         return Container();
     }
-
     return Text(text, style: style, textAlign: TextAlign.left);
   }
 
@@ -168,20 +168,14 @@ class WeeklyWeather extends StatelessWidget {
         border: Border.all(color: Colors.transparent),
       ),
       minX: 0,
-      maxX: 6,
-      minY: -10,
-      maxY: 15,
+      maxX: weeklyWeatherData.length.toDouble() - 1,
+      minY: -40,
+      maxY: 40,
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0, -5),
-            FlSpot(1, -3),
-            FlSpot(2, 0),
-            FlSpot(3, 4),
-            FlSpot(4, 2),
-            FlSpot(5, 0),
-            FlSpot(6, 2),
-          ],
+          spots: List.generate(weeklyWeatherData.length, (index) {
+            return FlSpot(index.toDouble(), weeklyWeatherData[index]);
+          }),
           isCurved: true,
           gradient: LinearGradient(
             begin: Alignment.topCenter,

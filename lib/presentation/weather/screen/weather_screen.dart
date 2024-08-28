@@ -19,11 +19,13 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   late Future<Map<String, dynamic>> weatherData;
+  late Future<List<double>> weeklyWeatherData;
   DateTime now = DateTime.now();
 
   @override
   void initState() {
     weatherData = ApiService().getTodayWeather();
+    weeklyWeatherData = ApiService().getWeeklyWeather(53.89, 27.66);
     super.initState();
   }
 
@@ -91,93 +93,113 @@ class _WeatherScreenState extends State<WeatherScreen> {
               final rainChance = weather['rain']?['1h'] ?? 0.0;
               final clouds = weather['clouds']['all'].toString();
 
-              return Column(
-                children: [
-                  WeatherMain(
-                    cityName: cityName,
-                    temperature: temperature,
-                    feelsLike: feelsLike,
-                    description: description,
-                    time: DateFormat('MMMM d, h:mm').format(now),
-                    maxTemp: maxTemp,
-                    minTemp: minTemp,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 16),
-                    child: Column(
+              return FutureBuilder(
+                future: weeklyWeatherData,
+                builder: (context, weeklySnapshot) {
+                  if (weeklySnapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (weeklySnapshot.hasError) {
+                    return const Center(child: Text('Smth went wrong '));
+                  } else if (weeklySnapshot.hasData) {
+                    final weeklyData = weeklySnapshot.data!;
+                    return Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            BasicAppButton(
-                              title: "Today",
-                              onButtonPressed: () {
-                                todayWeather(context);
-                              },
-                            ),
-                            BasicAppButton(
-                              title: "Tomorrow",
-                              onButtonPressed: () {
-                                tomorrowWeather(context);
-                              },
-                            ),
-                            BasicAppButton(
-                              title: "10 days",
-                              onButtonPressed: () {
-                                tenDaysWeather(context);
-                              },
-                            ),
-                          ],
+                        WeatherMain(
+                          cityName: cityName,
+                          temperature: temperature,
+                          feelsLike: feelsLike,
+                          description: description,
+                          time: DateFormat('MMMM d, h:mm').format(now),
+                          maxTemp: maxTemp,
+                          minTemp: minTemp,
                         ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            WeatherCard(
-                              weatherAttr: 'Wind speed',
-                              weatherAttrValue:
-                                  "${toKmh(windSpeed).toString()}km/h",
-                              weatherAttrIcon: Icons.wind_power,
-                            ),
-                            const SizedBox(width: 27),
-                            WeatherCard(
-                              weatherAttr: 'Rain chance',
-                              weatherAttrValue:
-                                  '${((rainChance / 10) * 100).round().toString()}%',
-                              weatherAttrIcon: Icons.water_drop,
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 16),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  BasicAppButton(
+                                    title: "Today",
+                                    onButtonPressed: () {
+                                      todayWeather(context);
+                                    },
+                                  ),
+                                  BasicAppButton(
+                                    title: "Tomorrow",
+                                    onButtonPressed: () {
+                                      tomorrowWeather(context);
+                                    },
+                                  ),
+                                  BasicAppButton(
+                                    title: "10 days",
+                                    onButtonPressed: () {
+                                      tenDaysWeather(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  WeatherCard(
+                                    weatherAttr: 'Wind speed',
+                                    weatherAttrValue:
+                                        "${toKmh(windSpeed).toString()}km/h",
+                                    weatherAttrIcon: Icons.wind_power,
+                                  ),
+                                  const SizedBox(width: 27),
+                                  WeatherCard(
+                                    weatherAttr: 'Rain chance',
+                                    weatherAttrValue:
+                                        '${((rainChance / 10) * 100).round().toString()}%',
+                                    weatherAttrIcon: Icons.water_drop,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  WeatherCard(
+                                    weatherAttr: 'Pressure',
+                                    weatherAttrValue: '$pressure hpa',
+                                    weatherAttrIcon:
+                                        Icons.panorama_fisheye_rounded,
+                                  ),
+                                  const SizedBox(width: 27),
+                                  WeatherCard(
+                                    weatherAttr: 'Clouds',
+                                    weatherAttrValue: '$clouds%',
+                                    weatherAttrIcon: Icons.cloud,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              const HourlyWeather(),
+                              const SizedBox(height: 16),
+                              WeeklyWeather(
+                                weeklyWeatherData: weeklyData,
+                              ),
+                              const SizedBox(height: 16),
+                              RainChanceWidget(),
+                              const SizedBox(height: 16),
+                              SunriseSunsetWidget(
+                                  sunrise: formatTime(sunrise),
+                                  sunset: formatTime(sunset)),
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            WeatherCard(
-                              weatherAttr: 'Pressure',
-                              weatherAttrValue: '$pressure hpa',
-                              weatherAttrIcon: Icons.panorama_fisheye_rounded,
-                            ),
-                            const SizedBox(width: 27),
-                            WeatherCard(
-                              weatherAttr: 'Clouds',
-                              weatherAttrValue: '$clouds%',
-                              weatherAttrIcon: Icons.cloud,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        const HourlyWeather(),
-                        const SizedBox(height: 16),
-                        WeeklyWeather(),
-                        const SizedBox(height: 16),
-                        RainChanceWidget(),
-                        const SizedBox(height: 16),
-                        SunriseSunsetWidget(
-                            sunrise: formatTime(sunrise),
-                            sunset: formatTime(sunset)),
                       ],
-                    ),
-                  ),
-                ],
+                    );
+                  } else {
+                    return const Center(child: Text('No data'));
+                  }
+                },
               );
             } else {
               return const Center(child: Text('No data'));

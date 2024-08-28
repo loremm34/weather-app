@@ -18,14 +18,36 @@ class ApiService {
     return {};
   }
 
-  Future<Map<String, dynamic>> getHourlyWeather(double lat, double lon) async {
+  Future<List<double>> getWeeklyWeather(double lat, double lon) async {
     final String url =
-        "https://api.openweathermap.org/data/2.5/forecast?$lat=33&$lon=55&units=metric&appid=$apiKey";
+        "$baseUrl/forecast?lat=$lat&lon=$lon&units=metric&appid=$apiKey";
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      Map<String, dynamic> data = jsonDecode(response.body);
+      List<dynamic> forecastList = data['list'];
+
+      Map<String, List<double>> dailyTemperatures = {};
+
+      for (var forecast in forecastList) {
+        String date = forecast['dt_txt'].split(' ')[0];
+        double temp = forecast['main']['temp'].toDouble();
+
+        if (dailyTemperatures.containsKey(date)) {
+          dailyTemperatures[date]!.add(temp);
+        } else {
+          dailyTemperatures[date] = [temp];
+        }
+      }
+
+      List<double> weeklyAverages = [];
+      dailyTemperatures.forEach((date, temps) {
+        double averageTemp = temps.reduce((a, b) => a + b) / temps.length;
+        weeklyAverages.add(averageTemp.roundToDouble());
+      });
+
+      return weeklyAverages;
     }
-    return {};
+    return [];
   }
 }
